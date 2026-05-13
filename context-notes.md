@@ -1,0 +1,22 @@
+# Context notes
+
+- 2026-05-06: City dummies are managed in `ServerScriptService.DummyManager` inside the open Roblox Studio place named `시티헌터`.
+- 2026-05-06: Current dummy models are built from anchored Parts, so simple Humanoid movement will not work until the model is moved manually or parts are unanchored and rigged differently.
+- 2026-05-06: Prefer a small server-side roaming loop that pivots each dummy model between safe candidate positions and idle pauses. This keeps the existing handmade dummy shape, HP bar, death/respawn flow, and city candidate pool.
+- 2026-05-06: Added `RunService.Heartbeat` based model pivot movement in `DummyManager`. Each dummy now idles for a random interval, then sometimes moves to a safe candidate point within 28 studs of its spawn/home position.
+- 2026-05-06: Verification in Play mode loaded City, confirmed 30 dummies hooked, sampled 30 dummies over 6 seconds with 24 moving and some remaining idle, then killed one dummy and confirmed the folder returned to 30 with a replacement away from the old position.
+- 2026-05-06: PowerShell default file reads were changed to UTF-8, so `PROJECT.md` now reads correctly. Updated the DummyManager section with roaming radius, speed, idle timing, and pause chance.
+- 2026-05-06: PC controls hint should live in `StarterPack.Gun.GunClient`, next to the existing `MobileControls` frame. Existing PC bindings are mouse left fire, mouse right zoom, Shift sprint, R reload, and Space jump.
+- 2026-05-06: Added `PcControlHints` to the same bottom-right position as `MobileControls`; it is controlled by `setPcControlHintsVisible` and only appears when `TouchEnabled` is false.
+- 2026-05-06: Play-mode verification waited for real Lobby -> City transition. Result: `current=City`, `PcControlHints.Visible=true`, `MobileControls.Visible=false`, rows included LMB/fire, RMB/zoom, Shift/sprint, R/reload, and Space/jump.
+- 2026-05-06: Scaled `PcControlHints` and its internal title, rows, key labels, padding, corners, and strokes by 1.5x. Play-mode verification after City transition reported size `402, 261`, title text size `21`, row height `30`, key width `123`, and action text size `18`.
+- 2026-05-06: Localization request means all player-facing UI text should go through a locale lookup. Need inventory before editing because text is created inside Roblox Studio scripts rather than exported source files.
+- 2026-05-06: Added `ReplicatedStorage.LocalizedText` with ko/en keys and `StarterPlayerScripts.UILocalizer` for attribute-based localization of PlayerGui/Workspace labels.
+- 2026-05-06: Updated client HUD scripts (`GunClient`, `StaminaSystem`, `LobbyUIController`, `DeathCountdownClient`) to format visible text through `LocalizedText`.
+- 2026-05-06: Updated server-created world UI (`MapManager`, `LobbyRankingDisplay`, `GunServer` score billboard) to attach `LocaleKey`/`LocaleArg` attributes so each client can localize it.
+- 2026-05-06: Verification in Play mode with `LocaleId=ko-kr`: Lobby title `City 맵까지`, ready count `준비 0 / 1`, City HUD ammo `탄약`, PC hints `조작법`, and Lobby world UI `준비 존`/`3초 동안 안에 머무르세요`/`일간 랭킹`.
+- 2026-05-06: Dash request reuses the existing sprint input plumbing (`Shift`, mobile Sprint button, `MobileSprintHeld`, `IsSprinting`) to keep cross-script impact small, but behavior is now one-shot dash instead of held speed boost.
+- 2026-05-06: Replaced held sprint with one-shot dash in `StaminaSystem`: cost 24 stamina, speed 86, duration 0.28s, cooldown 0.55s. `IsDashing` and `IsRolling` are both published while keeping `IsSprinting` as a compatibility flag for existing camera/zoom code.
+- 2026-05-06: Updated localized labels so the former run/sprint/roll controls display as dash/대시. `GunClient` blocks zoom while dash compatibility attributes are true.
+- 2026-05-06: Play-mode verification triggered dash via `MobileSprintHeld`; result moved 26.14 studs, `IsRolling` true during and false after, stamina dropped to 81 after brief recovery. City PC hint previously showed the roll label and should now show `SHIFT=대시`.
+- 2026-05-06: Final dash terminology verification after fixing a missing comma in `LocalizedText`: module require succeeded, `ActionSprint` returned `대시`, `IsDashing` was true during dash and false after, and City PC hint showed `SHIFT=대시`.

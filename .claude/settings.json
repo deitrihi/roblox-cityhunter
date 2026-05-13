@@ -1,0 +1,18 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "agent",
+            "if": "Edit(*PROJECT.md*)|Write(*PROJECT.md*)",
+            "prompt": "PROJECT.md가 방금 수정되었습니다. PROJECT.md의 현재 전체 내용을 읽고, README.md도 읽은 뒤, PROJECT.md의 변경 사항이 README.md에 반영되도록 README.md를 업데이트하세요. README.md의 기존 섹션 구조와 형식은 유지하되, 수치·서비스 구조·게임 흐름 등 내용이 PROJECT.md와 달라진 부분만 동기화하세요.",
+            "statusMessage": "README.md를 PROJECT.md와 동기화 중...",
+            "timeout": 120
+          }
+        ]
+      }
+    ]
+  }
+}

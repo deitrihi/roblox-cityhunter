@@ -33,6 +33,7 @@ Roblox Studio를 이용한 TPS 게임 제작 (CityHunter)
 | `DeathCountdownClient` | 사망 시 5초 카운트다운 UI |
 | `DisableDefaultMobileJumpButton` | 모바일 기본 점프 버튼 비활성화 |
 | `MapClientReadyReporter` | 맵 로드 완료를 서버에 신호 |
+| `UILocalizer` | PlayerGui/Workspace의 `LocaleKey` 문구를 플레이어 로케일로 변환 |
 | `Client` | (미구현 플레이스홀더) |
 
 ### StarterCharacterScripts
@@ -55,6 +56,7 @@ LobbyRemotes/
   MapClientReady    -- 클라 로드 완료 핸드셰이크 (동적 생성)
   DeathCountdown    -- 리스폰 카운트다운 (동적 생성)
 CurrentMap          -- StringValue: 현재 맵 이름
+LocalizedText       -- ModuleScript: ko/en 문구 번역 테이블과 포맷 함수
 Assets/models, Assets/sounds
 ```
 
@@ -65,6 +67,29 @@ Assets/models, Assets/sounds
 - `Maps/Lobby` - 로비 맵 템플릿
 - `Maps/City` - 시티 맵 템플릿 (Dummies 폴더 포함)
 - `StarterPack/Gun` - 총기 Tool 템플릿
+
+---
+
+## 조작 안내
+
+### PC
+| 동작 | 입력 |
+|---|---|
+| 발사 | 마우스 좌클릭 |
+| 줌 | 마우스 우클릭 |
+| 달리기 | Shift |
+| 재장전 | R |
+| 점프 | Space |
+
+PC에서는 모바일 조작 버튼 위치인 우하단에 위 조작 안내 UI를 표시한다.
+
+---
+
+## 로케일/문구 처리
+- 화면에 표시되는 고정 문구는 `ReplicatedStorage.LocalizedText`의 키를 기준으로 관리한다.
+- 클라이언트 HUD는 각 LocalScript에서 플레이어 `LocaleId`를 읽어 즉시 번역한다.
+- 서버가 생성하는 월드 UI는 TextLabel/TextButton에 `LocaleKey`, `LocaleArg1...` 속성을 붙이고, `StarterPlayerScripts.UILocalizer`가 플레이어별 로케일로 덮어쓴다.
+- 기본 지원 로케일: `ko`, `en`.
 
 ---
 
@@ -95,9 +120,11 @@ Assets/models, Assets/sounds
 | 항목 | 값 |
 |---|---|
 | 걷기 속도 | 32 |
-| 달리기 속도 | 64 |
 | 스태미너 최대 | 100 |
-| 달릴 때 소모 | 18/초 |
+| 대시 1회 소모 | 24 |
+| 대시 수평 속도 | 86 |
+| 대시 지속 시간 | 0.28초 |
+| 대시 쿨다운 | 0.55초 |
 | 이동 중 회복 | 12/초 |
 | 정지 시 회복 | 20/초 |
 | 완전 소진 후 대기 | 1.5초 |
@@ -130,6 +157,10 @@ Assets/models, Assets/sounds
 - 사망 시 1초 후 새 랜덤 위치에 리스폰
 - 스폰 위치: 6x6 블록 그리드, 건물과 겹치지 않도록 후보 풀 구성
 - 더미 간 최소 거리: 20스터드
+- 각 더미는 스폰/홈 위치 반경 28스터드 안의 안전 후보 지점을 로밍
+- 로밍 속도: 9스터드/초
+- 로밍 전 정지 시간: 1.2~3.5초 랜덤
+- 이동 대신 그대로 멈춰 있을 확률: 35%
 - HP 100, 머리 위 HP바 표시 (BillboardGui)
 - 기여도 비례 점수 분배: 데미지 비율 x 더미 포인트(4~10)
 
