@@ -8,3 +8,8 @@
 - 게임 룰, 핵심 수치, 서비스 구조, Remote/Event 이름, 맵 흐름을 변경하면 반드시 `PROJECT.md`도 같은 변경 내용으로 갱신한다.
 - 한글 문서는 UTF-8로 유지한다.
 - Roblox Studio 내부 스크립트가 파일로 export되어 있지 않을 수 있으므로, 코드 변경이 필요하면 Roblox Studio 도구로 확인하고 수정한다.
+
+## 기획서 작성 원칙
+
+이 프로젝트의 기획서는 아래 가이드라인을 따른다.
+(원본: https://claude.ai/claude-code/onboard/PhNRte2yKsLf)
