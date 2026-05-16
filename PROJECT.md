@@ -1,6 +1,20 @@
 ## Project
 Roblox Studio를 이용한 TPS 게임 제작 (CityHunter)
 
+## 노션 기획서
+
+- 루트: https://www.notion.so/3605d3a87ff381e58cb1f57010ef224b
+- 게임 개요: https://www.notion.so/3605d3a87ff381418ed8c6b095cd7de0
+- 게임 흐름: https://www.notion.so/3605d3a87ff3815ba2cad8a0268e2945
+- 조작 방법: https://www.notion.so/3605d3a87ff381b89574c33996c211a1
+- 핵심 수치: https://www.notion.so/3605d3a87ff381779e42eae05fbceb13
+- 더미 NPC: https://www.notion.so/3605d3a87ff3814f8990c28b5793dbca
+- 랭킹 시스템: https://www.notion.so/3605d3a87ff3811bbb4ad0bb406a6464
+- 서비스 구조: https://www.notion.so/3605d3a87ff381c5812ad13434d52c50
+- 로케일/다국어: https://www.notion.so/3605d3a87ff381419fbbe4eaf1d15573
+
+노션 기획서와 이 문서가 충돌하면 이 문서(PROJECT.md)를 우선한다.
+
 이 문서는 CityHunter의 공통 게임 룰과 구조의 기준 문서이며, 구현 변경 시 함께 갱신한다.
 
 작업의 대부분은 Roblox Studio에서 진행한다. 이 저장소에는 `.rbxl` 파일과 프로젝트 문서를 두며, Roblox Studio 내부 스크립트가 별도 소스 파일로 export되어 있지 않을 수 있다.
